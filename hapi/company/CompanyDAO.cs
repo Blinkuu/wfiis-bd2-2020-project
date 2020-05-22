@@ -1,54 +1,48 @@
-﻿using hapi.context;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
-using System.IO;
-using System.Xml;
+using System.Data.SqlTypes;
 using System.Xml.Linq;
+using hapi.context;
 
 namespace hapi.company
 {
     public class CompanyDAO : ICompanyDAO
     {
-        private ConnectionContext connectionContext;
+        private readonly ConnectionContext _connectionContext;
+
         public CompanyDAO(ConnectionContext connectionContext)
         {
-            this.connectionContext = connectionContext;
+            this._connectionContext = connectionContext;
         }
 
         public Company GetCompany(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionContext.connectionString))
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand("SELECT * FROM [Company] WHERE id=@id;", connection);
+            command.Parameters.AddWithValue("@id", id);
+
+            try
             {
-                connection.Open();
-
-                SqlCommand command = new SqlCommand("SELECT * FROM [Company] WHERE id=@id;", connection);
-                command.Parameters.AddWithValue("@id", id);
-
-                try
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                    try
                     {
-                        while (reader.Read())
-                        {
-                            try
-                            {
-                                XDocument document = XDocument.Parse(reader[2].ToString());
-                                return new Company(reader.GetInt32(0), reader.GetString(1), document);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine("Could not load XML document");
-                                Console.WriteLine(e.ToString());
-                            }
-                        }
+                        var document = XDocument.Parse(reader[2].ToString());
+                        return new Company(reader.GetInt32(0), reader.GetString(1), document);
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Could not execute reader!");
-                    Console.WriteLine(e.ToString());
-                }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
 
             return Company.Null;
@@ -56,37 +50,29 @@ namespace hapi.company
 
         public Company GetCompany(string name)
         {
-            using (SqlConnection connection = new SqlConnection(connectionContext.connectionString))
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand("SELECT * FROM [Company] WHERE companyName=@companyName;", connection);
+            command.Parameters.AddWithValue("@companyName", name);
+
+            try
             {
-                connection.Open();
-
-                SqlCommand command = new SqlCommand("SELECT * FROM [Company] WHERE companyName=@companyName;", connection);
-                command.Parameters.AddWithValue("@companyName", name);
-
-                try
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                    try
                     {
-                        while (reader.Read())
-                        {
-                            try
-                            {
-                                XDocument document = XDocument.Parse(reader[2].ToString());
-                                return new Company(reader.GetInt32(0), reader.GetString(1), document);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine("Could not load XML document");
-                                Console.WriteLine(e.ToString());
-                            }
-                        }
+                        var document = XDocument.Parse(reader[2].ToString());
+                        return new Company(reader.GetInt32(0), reader.GetString(1), document);
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Could not execute reader!");
-                    Console.WriteLine(e.ToString());
-                }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
 
             return Company.Null;
@@ -94,9 +80,62 @@ namespace hapi.company
 
         public List<Company> GetAllCompanies()
         {
+            var result = new List<Company>();
 
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
 
-            return new List<Company>();
+            var command = new SqlCommand("SELECT * FROM [Company];", connection);
+
+            try
+            {
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                    try
+                    {
+                        var document = XDocument.Parse(reader[2].ToString());
+                        result.Add(new Company(reader.GetInt32(0), reader.GetString(1), document));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return result;
+        }
+
+        public void AddCompany(Company company)
+        {
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand(
+                @"INSERT INTO [Company] ([companyName] ,[companyData])
+                      VALUES (@name, @companyData)"
+                , connection);
+
+            command.Parameters.Add("@name", SqlDbType.NVarChar).Value = company.Name;
+            command.Parameters.Add("@companyData", SqlDbType.Xml).Value = new SqlXml(company.Data.CreateReader());
+
+            var transaction = connection.BeginTransaction();
+            command.Transaction = transaction;
+            try
+            {
+                command.ExecuteNonQuery();
+                transaction.Commit();
+            }
+            catch (SqlException e)
+            {
+                transaction.Rollback();
+                Console.WriteLine(e.ToString());
+                
+                throw;
+            }
         }
     }
 }

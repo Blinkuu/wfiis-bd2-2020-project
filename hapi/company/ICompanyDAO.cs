@@ -11,5 +11,7 @@ namespace hapi.company
         public Company GetCompany(string name);
 
         public List<Company> GetAllCompanies();
+
+        public void AddCompany(Company company);
     }
 }
