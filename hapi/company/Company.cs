@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using hapi.employee;
 
 namespace hapi.company
 {
@@ -8,15 +9,15 @@ namespace hapi.company
 
         public Company(int id, string name, XDocument data)
         {
-            this.Id = id;
-            this.Name = name;
-            this.Data = data;
+            Id = id;
+            Name = name;
+            Data = data;
         }
 
         public Company(string name, XDocument data)
         {
-            this.Name = name;
-            this.Data = data;
+            Name = name;
+            Data = data;
         }
 
         public int Id { get; set; }
@@ -27,9 +28,9 @@ namespace hapi.company
 
         public override string ToString()
         {
-            return $"id: {Id}\n" +
-                   $"name: {Name}\n" +
-                   $"data:\n{Data}";
+            return $"Id: {Id}\n" +
+                   $"Name: {Name}\n" +
+                   $"Data:\n{Data}";
         }
 
         private class NullCompany : Company

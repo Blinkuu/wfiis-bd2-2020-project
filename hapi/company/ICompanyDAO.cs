@@ -6,9 +6,9 @@ namespace hapi.company
 {
     public interface ICompanyDAO
     {
-        public Company GetCompany(int id);
+        public Company GetCompanyById(int id);
 
-        public Company GetCompany(string name);
+        public Company GetCompanyByName(string name);
 
         public List<Company> GetAllCompanies();
 

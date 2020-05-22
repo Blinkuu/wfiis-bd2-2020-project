@@ -12,9 +12,11 @@ namespace hapi
         {
             var connectionContext = new ConnectionContext(ConnectionString);
 
-            var companyDAO = new CompanyDAO(connectionContext);
-            var singleCompany = companyDAO.GetCompany("Test Company");
-            Console.WriteLine(singleCompany);
+            var companyDao = new CompanyDAO(connectionContext);
+            var company = companyDao.GetCompanyByName("Test Company");
+
+            // var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
+            Console.WriteLine(company);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace hapi.company
             this._connectionContext = connectionContext;
         }
 
-        public Company GetCompany(int id)
+        public Company GetCompanyById(int id)
         {
             using var connection = new SqlConnection(_connectionContext.connectionString);
             connection.Open();
@@ -48,7 +48,7 @@ namespace hapi.company
             return Company.Null;
         }
 
-        public Company GetCompany(string name)
+        public Company GetCompanyByName(string name)
         {
             using var connection = new SqlConnection(_connectionContext.connectionString);
             connection.Open();

@@ -46,7 +46,7 @@ namespace hapi_tests
             var connectionContext = new hapi.context.ConnectionContext(connectionString);
 
             var companyDao = new hapi.company.CompanyDAO(connectionContext);
-            var company = companyDao.GetCompany(1);
+            var company = companyDao.GetCompanyById(1);
 
             Assert.AreEqual(company.Id, 1);
             Assert.AreEqual(company.Name, "Test Company");
@@ -90,7 +90,7 @@ namespace hapi_tests
             var connectionContext = new hapi.context.ConnectionContext(connectionString);
 
             var companyDao = new hapi.company.CompanyDAO(connectionContext);
-            var company = companyDao.GetCompany("Test Company");
+            var company = companyDao.GetCompanyByName("Test Company");
 
             Assert.AreEqual(company.Id, 1);
             Assert.AreEqual(company.Name, "Test Company");
