@@ -4,7 +4,7 @@ using System.Text;
 
 namespace hapi.company
 {
-    interface ICompanyDAO
+    public interface ICompanyDAO
     {
         public Company GetCompany(int id);
 
