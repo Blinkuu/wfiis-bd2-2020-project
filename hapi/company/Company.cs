@@ -30,7 +30,7 @@ namespace hapi.company
         {
             return $"Id: {Id}\n" +
                    $"Name: {Name}\n" +
-                   $"Data:\n{Data}";
+                   $"Data:\n{Data}\n";
         }
 
         private class NullCompany : Company

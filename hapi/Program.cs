@@ -1,5 +1,6 @@
 ﻿using System;
 using hapi.company;
+using hapi.employee;
 using hapi.context;
 
 namespace hapi
@@ -12,11 +13,14 @@ namespace hapi
         {
             var connectionContext = new ConnectionContext(ConnectionString);
 
-            var companyDao = new CompanyDAO(connectionContext);
-            var company = companyDao.GetCompanyByName("Test Company");
+            var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
+            var employees = employeeDao.GetAllEmployees();
 
-            // var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
-            Console.WriteLine(company);
+            foreach(var employee in employees)
+            {
+                Console.WriteLine(employee);
+            }
+
         }
     }
 }

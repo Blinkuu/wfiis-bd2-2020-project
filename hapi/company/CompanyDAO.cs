@@ -38,11 +38,13 @@ namespace hapi.company
                     catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
+                        throw;
                     }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                throw;
             }
 
             return Company.Null;
@@ -68,11 +70,13 @@ namespace hapi.company
                     catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
+                        throw;
                     }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                throw;
             }
 
             return Company.Null;
@@ -99,11 +103,13 @@ namespace hapi.company
                     catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
+                        throw;
                     }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                throw;
             }
 
             return result;
@@ -133,7 +139,6 @@ namespace hapi.company
             {
                 transaction.Rollback();
                 Console.WriteLine(e.ToString());
-                
                 throw;
             }
         }

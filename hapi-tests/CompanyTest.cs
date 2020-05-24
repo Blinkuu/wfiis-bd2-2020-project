@@ -1,18 +1,20 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using hapi.company;
+using hapi.context;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace hapi_tests
 {
     [TestClass]
     public class CompanyTest
     {
-        private static readonly string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=HierarchyDB;Integrated Security=True";
+        private static readonly string connectionString =
+            @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=HierarchyDB;Integrated Security=True";
 
         [TestMethod]
         public void TestGetCompanyById()
         {
-            XDocument document = XDocument.Parse(
+            var document = XDocument.Parse(
                 @"<Company xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
                   <Employee>
                     <EmployeeID> 1 </EmployeeID>
@@ -43,9 +45,9 @@ namespace hapi_tests
                 </Company>
                 ");
 
-            var connectionContext = new hapi.context.ConnectionContext(connectionString);
+            var connectionContext = new ConnectionContext(connectionString);
 
-            var companyDao = new hapi.company.CompanyDAO(connectionContext);
+            var companyDao = new CompanyDAO(connectionContext);
             var company = companyDao.GetCompanyById(1);
 
             Assert.AreEqual(company.Id, 1);
@@ -56,7 +58,7 @@ namespace hapi_tests
         [TestMethod]
         public void TestGetCompanyByName()
         {
-            XDocument document = XDocument.Parse(
+            var document = XDocument.Parse(
                 @"<Company xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
                   <Employee>
                     <EmployeeID> 1 </EmployeeID>
@@ -86,10 +88,10 @@ namespace hapi_tests
                   </Employee>
                 </Company>
                 ");
-            
-            var connectionContext = new hapi.context.ConnectionContext(connectionString);
 
-            var companyDao = new hapi.company.CompanyDAO(connectionContext);
+            var connectionContext = new ConnectionContext(connectionString);
+
+            var companyDao = new CompanyDAO(connectionContext);
             var company = companyDao.GetCompanyByName("Test Company");
 
             Assert.AreEqual(company.Id, 1);
@@ -100,7 +102,7 @@ namespace hapi_tests
         [TestMethod]
         public void TestAddCompany()
         {
-            XDocument document = XDocument.Parse(
+            var document = XDocument.Parse(
                 @"<Company xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
                   <Employee>
                     <EmployeeID> 1 </EmployeeID>
@@ -131,9 +133,9 @@ namespace hapi_tests
                 </Company>
                 ");
 
-            var connectionContext = new hapi.context.ConnectionContext(connectionString);
+            var connectionContext = new ConnectionContext(connectionString);
             var companyDao = new CompanyDAO(connectionContext);
-            
+
             var company = new Company(1, "Other Co.", document);
             companyDao.AddCompany(company);
         }
