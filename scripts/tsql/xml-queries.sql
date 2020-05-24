@@ -18,20 +18,32 @@ WHERE companyName = 'Test Company';
 
 -- by first name
 SELECT helperTable.Employee.query('.') FROM [dbo].[Company]
-                  CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
-                  WHERE companyName = 'Test Company' AND helperTable.Employee.query('./FirstName').value('.', 'varchar(max)') = 'Bob';
+CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+WHERE companyName = 'Test Company' AND helperTable.Employee.query('./FirstName').value('.', 'varchar(max)') = 'Bob';
 
 -- by last name
 SELECT helperTable.Employee.query('.') FROM [dbo].[Company]
-                  CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
-                  WHERE companyName = 'Test Company' AND helperTable.Employee.query('./LastName').value('.', 'varchar(max)') = 'Frank';
+CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+WHERE companyName = 'Test Company' AND helperTable.Employee.query('./LastName').value('.', 'varchar(max)') = 'Frank';
 
 -- by full name
 SELECT helperTable.Employee.query('.') FROM [dbo].[Company]
-                  CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
-                  WHERE companyName = 'Test Company' 
-				  AND helperTable.Employee.query('./FirstName').value('.', 'varchar(max)') = 'Bob'
-				  AND helperTable.Employee.query('./LastName').value('.', 'varchar(max)') = 'Frank';
+CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+WHERE companyName = 'Test Company' 
+AND helperTable.Employee.query('./FirstName').value('.', 'varchar(max)') = 'Bob'
+AND helperTable.Employee.query('./LastName').value('.', 'varchar(max)') = 'Frank';
+
+-- get manager by employee id
+DECLARE @managerID int;
+SELECT @managerID = helperTable.Employee.value('./ManagerID', 'integer')  
+FROM [dbo].[Company]  
+CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+WHERE companyName = 'Test Company' AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar') = '2'
+
+SELECT helperTable.Employee.query('.')  
+FROM [dbo].[Company]  
+CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+WHERE companyName = 'Test Company' AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar') = CAST(@managerID AS varchar(max));
 
 -- insert new employee
 DECLARE @currData xml

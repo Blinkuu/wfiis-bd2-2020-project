@@ -25,7 +25,7 @@ namespace hapi.employee
             var command = new SqlCommand(
                 @"SELECT helperTable.Employee.query('.') FROM[dbo].[Company]
                   CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
-                  WHERE companyName = @companyName AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar') = @id;",
+                  WHERE companyName = @companyName AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar(max)') = @id;",
                 connection);
 
             command.Parameters.AddWithValue("@companyName", _companyName);
@@ -217,7 +217,47 @@ namespace hapi.employee
 
         public Employee GetManagerByEmployeeId(string id)
         {
-            throw new NotImplementedException();
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand(
+                @"DECLARE @managerID int;
+                  SELECT @managerID = helperTable.Employee.value('./ManagerID', 'varchar(max)')  
+                  FROM [dbo].[Company]  
+                  CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+                  WHERE companyName = @companyName AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar(max)') = @id
+                  
+                  SELECT helperTable.Employee.query('.')  
+                  FROM [dbo].[Company]  
+                  CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+                  WHERE companyName = @companyName AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar(max)') = CAST(@managerID AS varchar(max));",
+                connection);
+
+            command.Parameters.AddWithValue("@companyName", _companyName);
+            command.Parameters.AddWithValue("@id", id);
+
+            try
+            {
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                    try
+                    {
+                        var document = XDocument.Parse(reader[0].ToString());
+
+                        return new Employee(document);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+
+            return Employee.Null;
         }
 
         public List<Employee> GetStaffByManagerId(string id)
@@ -231,18 +271,21 @@ namespace hapi.employee
             connection.Open();
 
             var command = new SqlCommand(
-                @"
-                DECLARE @currentData xml;
-                SELECT @currentData = companyData FROM [Company] WHERE companyName = @companyName;
-                SELECT @currentData;
-                DECLARE @newData xml;
-                SET @newData = @xmlData;
-                DECLARE @final XML;
-                SET @final = CAST('<tmp>' + CAST(@newData AS VARCHAR(MAX)) + '</tmp>' + CAST(@currentData AS VARCHAR(MAX)) AS XML);
-                SET @final.modify('insert /tmp/* into (/Company)[1]');
-                SET @final.modify('delete /tmp');
-                SELECT @final;
-                UPDATE [Company] SET [companyData] = @final WHERE companyName = @companyName;"
+                @"DECLARE @currentData xml;
+                  SELECT @currentData = companyData FROM [Company] WHERE companyName = @companyName;
+                  SELECT @currentData;
+
+                  DECLARE @newData xml;
+                  SET @newData = @xmlData;
+
+                  DECLARE @final XML;
+                  SET @final = CAST('<tmp>' + CAST(@newData AS VARCHAR(MAX)) + '</tmp>' + CAST(@currentData AS VARCHAR(MAX)) AS XML);
+                  SET @final.modify('insert /tmp/* into (/Company)[1]');
+                  SET @final.modify('delete /tmp');
+
+                  SELECT @final;
+
+                  UPDATE [Company] SET [companyData] = @final WHERE companyName = @companyName;"
                 , connection);
 
             command.Parameters.AddWithValue("@companyName", _companyName);

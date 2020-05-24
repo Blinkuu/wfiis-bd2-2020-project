@@ -110,7 +110,7 @@ namespace hapi.employee
                    $"LastName: {LastName}\n" +
                    $"ContactNo: {ContactNo}\n" +
                    $"Email: {Email}\n" +
-                   $"Address: {Address}\n";
+                   $"Address:\n{Address}\n";
         }
 
         private class NullEmployee : Employee

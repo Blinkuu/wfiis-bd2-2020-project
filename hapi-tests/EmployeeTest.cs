@@ -1,5 +1,4 @@
-﻿using System;
-using hapi.context;
+﻿using hapi.context;
 using hapi.employee;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,15 +18,15 @@ namespace hapi_tests
             var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
             var employee = employeeDao.GetEmployeeById("1");
 
-            Assert.AreEqual(employee.Id, "1");
-            Assert.AreEqual(employee.ManagerId, "0");
-            Assert.AreEqual(employee.FirstName, "Bob");
-            Assert.AreEqual(employee.LastName, "Frank");
-            Assert.AreEqual(employee.ContactNo, "+48123456789");
-            Assert.AreEqual(employee.Email, "bob@frank.com");
-            Assert.AreEqual(employee.Address.City, "BobCity");
-            Assert.AreEqual(employee.Address.State, "BobState");
-            Assert.AreEqual(employee.Address.Zip, "12345");
+            Assert.AreEqual("1", employee.Id);
+            Assert.AreEqual("0", employee.ManagerId);
+            Assert.AreEqual("Bob", employee.FirstName);
+            Assert.AreEqual("Frank", employee.LastName);
+            Assert.AreEqual("+48123456789", employee.ContactNo);
+            Assert.AreEqual("bob@frank.com", employee.Email);
+            Assert.AreEqual("BobCity", employee.Address.City);
+            Assert.AreEqual("BobState", employee.Address.State);
+            Assert.AreEqual("12345", employee.Address.Zip);
         }
 
         [TestMethod]
@@ -38,15 +37,15 @@ namespace hapi_tests
             var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
             var employees = employeeDao.GetEmployeesByFullName("Bob", "Frank");
 
-            Assert.AreEqual(employees[0].Id, "1");
-            Assert.AreEqual(employees[0].ManagerId, "0");
-            Assert.AreEqual(employees[0].FirstName, "Bob");
-            Assert.AreEqual(employees[0].LastName, "Frank");
-            Assert.AreEqual(employees[0].ContactNo, "+48123456789");
-            Assert.AreEqual(employees[0].Email, "bob@frank.com");
-            Assert.AreEqual(employees[0].Address.City, "BobCity");
-            Assert.AreEqual(employees[0].Address.State, "BobState");
-            Assert.AreEqual(employees[0].Address.Zip, "12345");
+            Assert.AreEqual("1", employees[0].Id);
+            Assert.AreEqual("0", employees[0].ManagerId);
+            Assert.AreEqual("Bob", employees[0].FirstName);
+            Assert.AreEqual("Frank", employees[0].LastName);
+            Assert.AreEqual("+48123456789", employees[0].ContactNo);
+            Assert.AreEqual("bob@frank.com", employees[0].Email);
+            Assert.AreEqual("BobCity", employees[0].Address.City);
+            Assert.AreEqual("BobState", employees[0].Address.State);
+            Assert.AreEqual("12345", employees[0].Address.Zip);
         }
 
         [TestMethod]
@@ -57,15 +56,15 @@ namespace hapi_tests
             var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
             var employees = employeeDao.GetEmployeesByFirstName("Bob");
 
-            Assert.AreEqual(employees[0].Id, "1");
-            Assert.AreEqual(employees[0].ManagerId, "0");
-            Assert.AreEqual(employees[0].FirstName, "Bob");
-            Assert.AreEqual(employees[0].LastName, "Frank");
-            Assert.AreEqual(employees[0].ContactNo, "+48123456789");
-            Assert.AreEqual(employees[0].Email, "bob@frank.com");
-            Assert.AreEqual(employees[0].Address.City, "BobCity");
-            Assert.AreEqual(employees[0].Address.State, "BobState");
-            Assert.AreEqual(employees[0].Address.Zip, "12345");
+            Assert.AreEqual("1", employees[0].Id);
+            Assert.AreEqual("0", employees[0].ManagerId);
+            Assert.AreEqual("Bob", employees[0].FirstName);
+            Assert.AreEqual("Frank", employees[0].LastName);
+            Assert.AreEqual("+48123456789", employees[0].ContactNo);
+            Assert.AreEqual("bob@frank.com", employees[0].Email);
+            Assert.AreEqual("BobCity", employees[0].Address.City);
+            Assert.AreEqual("BobState", employees[0].Address.State);
+            Assert.AreEqual("12345", employees[0].Address.Zip);
         }
 
         [TestMethod]
@@ -76,15 +75,15 @@ namespace hapi_tests
             var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
             var employees = employeeDao.GetEmployeesByLastName("Frank");
 
-            Assert.AreEqual(employees[0].Id, "1");
-            Assert.AreEqual(employees[0].ManagerId, "0");
-            Assert.AreEqual(employees[0].FirstName, "Bob");
-            Assert.AreEqual(employees[0].LastName, "Frank");
-            Assert.AreEqual(employees[0].ContactNo, "+48123456789");
-            Assert.AreEqual(employees[0].Email, "bob@frank.com");
-            Assert.AreEqual(employees[0].Address.City, "BobCity");
-            Assert.AreEqual(employees[0].Address.State, "BobState");
-            Assert.AreEqual(employees[0].Address.Zip, "12345");
+            Assert.AreEqual("1", employees[0].Id);
+            Assert.AreEqual("0", employees[0].ManagerId);
+            Assert.AreEqual("Bob", employees[0].FirstName);
+            Assert.AreEqual("Frank", employees[0].LastName);
+            Assert.AreEqual("+48123456789", employees[0].ContactNo);
+            Assert.AreEqual("bob@frank.com", employees[0].Email);
+            Assert.AreEqual("BobCity", employees[0].Address.City);
+            Assert.AreEqual("BobState", employees[0].Address.State);
+            Assert.AreEqual("12345", employees[0].Address.Zip);
         }
 
         [TestMethod]
@@ -95,13 +94,34 @@ namespace hapi_tests
             var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
             var employees = employeeDao.GetAllEmployees();
 
-            Assert.AreNotEqual(employees.Count, 0);
+            Assert.AreEqual("1", employees[0].Id);
+            Assert.AreEqual("0", employees[0].ManagerId);
+            Assert.AreEqual("Bob", employees[0].FirstName);
+            Assert.AreEqual("Frank", employees[0].LastName);
+            Assert.AreEqual("+48123456789", employees[0].ContactNo);
+            Assert.AreEqual("bob@frank.com", employees[0].Email);
+            Assert.AreEqual("BobCity", employees[0].Address.City);
+            Assert.AreEqual("BobState", employees[0].Address.State);
+            Assert.AreEqual("12345", employees[0].Address.Zip);
         }
 
         [TestMethod]
         public void GetManagerByEmployeeId()
         {
-            Assert.IsTrue(false);
+            var connectionContext = new ConnectionContext(connectionString);
+
+            var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
+            var employee = employeeDao.GetManagerByEmployeeId("2");
+
+            Assert.AreEqual("1", employee.Id);
+            Assert.AreEqual("0", employee.ManagerId);
+            Assert.AreEqual("Bob", employee.FirstName);
+            Assert.AreEqual("Frank", employee.LastName);
+            Assert.AreEqual("+48123456789", employee.ContactNo);
+            Assert.AreEqual("bob@frank.com", employee.Email);
+            Assert.AreEqual("BobCity", employee.Address.City);
+            Assert.AreEqual("BobState", employee.Address.State);
+            Assert.AreEqual("12345", employee.Address.Zip);
         }
 
         [TestMethod]

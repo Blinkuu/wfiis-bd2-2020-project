@@ -124,8 +124,8 @@ namespace hapi.company
                       VALUES (@name, @companyData)"
                 , connection);
 
-            command.Parameters.Add("@name", SqlDbType.NVarChar).Value = company.Name;
-            command.Parameters.Add("@companyData", SqlDbType.Xml).Value = new SqlXml(company.Data.CreateReader());
+            command.Parameters.AddWithValue("@name", company.Name);
+            command.Parameters.AddWithValue("@companyData", new SqlXml(company.Data.CreateReader()));
 
             var transaction = connection.BeginTransaction();
             command.Transaction = transaction;

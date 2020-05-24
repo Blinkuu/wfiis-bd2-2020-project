@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 using hapi.company;
 using hapi.context;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -49,9 +50,9 @@ namespace hapi_tests
             var companyDao = new CompanyDAO(connectionContext);
             var company = companyDao.GetCompanyById(1);
 
-            Assert.AreEqual(company.Id, 1);
-            Assert.AreEqual(company.Name, "Test Company");
-            Assert.AreEqual(company.Data.ToString(), document.ToString());
+            Assert.AreEqual(1, company.Id);
+            Assert.AreEqual("Test Company", company.Name);
+            Assert.AreEqual(document.ToString(), company.Data.ToString());
         }
 
         [TestMethod]
@@ -92,9 +93,9 @@ namespace hapi_tests
             var companyDao = new CompanyDAO(connectionContext);
             var company = companyDao.GetCompanyByName("Test Company");
 
-            Assert.AreEqual(company.Id, 1);
-            Assert.AreEqual(company.Name, "Test Company");
-            Assert.AreEqual(company.Data.ToString(), document.ToString());
+            Assert.AreEqual(1, company.Id);
+            Assert.AreEqual("Test Company", company.Name);
+            Assert.AreEqual(document.ToString(), company.Data.ToString());
         }
 
         [TestMethod]
@@ -135,7 +136,7 @@ namespace hapi_tests
 
             var companyDao = new CompanyDAO(connectionContext);
 
-            var company = new Company("Other Co. " + System.Guid.NewGuid(), document);
+            var company = new Company("Other Co. " + Guid.NewGuid(), document);
             companyDao.AddCompany(company);
         }
     }
