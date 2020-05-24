@@ -17,7 +17,7 @@ namespace hapi.employee
             _companyName = companyName;
         }
 
-        public Employee GetEmployeeById(int id)
+        public Employee GetEmployeeById(string id)
         {
             using var connection = new SqlConnection(_connectionContext.connectionString);
             connection.Open();
@@ -25,7 +25,7 @@ namespace hapi.employee
             var command = new SqlCommand(
                 @"SELECT helperTable.Employee.query('.') FROM[dbo].[Company]
                   CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
-                  WHERE companyName = @companyName AND helperTable.Employee.query('./EmployeeID').value('.', 'int') = @id;",
+                  WHERE companyName = @companyName AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar') = @id;",
                 connection);
 
             command.Parameters.AddWithValue("@companyName", _companyName);
@@ -215,12 +215,12 @@ namespace hapi.employee
             return result;
         }
 
-        public Employee GetManagerByEmployeeId(int id)
+        public Employee GetManagerByEmployeeId(string id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Employee> GetStaffByManagerId(int id)
+        public List<Employee> GetStaffByManagerId(string id)
         {
             throw new NotImplementedException();
         }

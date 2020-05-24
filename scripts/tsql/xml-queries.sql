@@ -8,7 +8,7 @@ SELECT * FROM [dbo].[Company] WHERE companyName = 'Test Company';
 SELECT helperTable.Employee.query('.')  
 FROM [dbo].[Company]  
 CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
-WHERE companyName = 'Test Company' AND helperTable.Employee.query('./EmployeeID').value('.', 'int') = 1;
+WHERE companyName = 'Test Company' AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar') = '1';
 
 -- all
 SELECT helperTable.Employee.query('.')  

@@ -4,8 +4,7 @@ namespace hapi.employee
 {
     internal interface IEmployeeDAO
     {
-
-        public Employee GetEmployeeById(int id);
+        public Employee GetEmployeeById(string id);
 
         public List<Employee> GetEmployeesByFullName(string firstName, string lastName);
 
@@ -15,9 +14,9 @@ namespace hapi.employee
 
         public List<Employee> GetAllEmployees();
 
-        public Employee GetManagerByEmployeeId(int id);
+        public Employee GetManagerByEmployeeId(string id);
 
-        public List<Employee> GetStaffByManagerId(int id);
+        public List<Employee> GetStaffByManagerId(string id);
 
         public void AddEmployee(Employee employee);
     }

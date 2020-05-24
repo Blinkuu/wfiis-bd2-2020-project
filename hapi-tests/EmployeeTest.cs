@@ -1,4 +1,5 @@
-﻿using hapi.context;
+﻿using System;
+using hapi.context;
 using hapi.employee;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,7 +17,7 @@ namespace hapi_tests
             var connectionContext = new ConnectionContext(connectionString);
 
             var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
-            var employee = employeeDao.GetEmployeeById(1);
+            var employee = employeeDao.GetEmployeeById("1");
 
             Assert.AreEqual(employee.Id, "1");
             Assert.AreEqual(employee.ManagerId, "0");
@@ -114,7 +115,7 @@ namespace hapi_tests
         {
             var connectionContext = new ConnectionContext(connectionString);
 
-            var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
+            var employeeDao = new EmployeeDAO(connectionContext, "Other Co.");
             var employee = new Employee("1", "TestFirstName", "TestLastName", "+48987654321", "test@test.com",
                 new Address("TestCity", "TestState", "54321"));
 
