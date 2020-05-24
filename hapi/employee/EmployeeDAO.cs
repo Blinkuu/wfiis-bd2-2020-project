@@ -231,8 +231,24 @@ namespace hapi.employee
             connection.Open();
 
             var command = new SqlCommand(
-                @""
+                @"
+                DECLARE @currentData xml;
+                SELECT @currentData = companyData FROM [Company] WHERE companyName = @companyName;
+                SELECT @currentData;
+                DECLARE @newData xml;
+                SET @newData = @xmlData;
+                DECLARE @final XML;
+                SET @final = CAST('<tmp>' + CAST(@newData AS VARCHAR(MAX)) + '</tmp>' + CAST(@currentData AS VARCHAR(MAX)) AS XML);
+                SET @final.modify('insert /tmp/* into (/Company)[1]');
+                SET @final.modify('delete /tmp');
+                SELECT @final;
+                UPDATE [Company] SET [companyData] = @final WHERE companyName = @companyName;"
                 , connection);
+
+            command.Parameters.AddWithValue("@companyName", _companyName);
+            command.Parameters.AddWithValue("@xmlData", employee.ToXDocument().ToString());
+
+            Console.WriteLine(employee.ToXDocument().ToString());
 
             var transaction = connection.BeginTransaction();
             command.Transaction = transaction;

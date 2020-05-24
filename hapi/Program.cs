@@ -1,5 +1,4 @@
-﻿using System;
-using hapi.context;
+﻿using hapi.context;
 using hapi.employee;
 
 namespace hapi
@@ -14,9 +13,10 @@ namespace hapi
             var connectionContext = new ConnectionContext(ConnectionString);
 
             var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
-            var employees = employeeDao.GetAllEmployees();
+            var employee = new Employee("1", "TestFirstName", "TestLastName", "+48987654321", "test@test.com",
+                new Address("TestCity", "TestState", "54321"));
 
-            foreach (var employee in employees) Console.WriteLine(employee);
+            employeeDao.AddEmployee(employee);
         }
     }
 }
