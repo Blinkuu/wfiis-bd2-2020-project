@@ -135,7 +135,7 @@ namespace hapi_tests
 
             var companyDao = new CompanyDAO(connectionContext);
 
-            var company = new Company("Other Co.", document);
+            var company = new Company("Other Co. " + System.Guid.NewGuid(), document);
             companyDao.AddCompany(company);
         }
     }
