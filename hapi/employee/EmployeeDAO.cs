@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Xml.Linq;
-using hapi.company;
 using hapi.context;
 
 namespace hapi.employee
@@ -26,8 +25,9 @@ namespace hapi.employee
             var command = new SqlCommand(
                 @"SELECT helperTable.Employee.query('.') FROM[dbo].[Company]
                   CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
-                  WHERE companyName = @companyName AND helperTable.Employee.query('./EmployeeID').value('.', 'int') = @id;", connection);
-            
+                  WHERE companyName = @companyName AND helperTable.Employee.query('./EmployeeID').value('.', 'int') = @id;",
+                connection);
+
             command.Parameters.AddWithValue("@companyName", _companyName);
             command.Parameters.AddWithValue("@id", id);
 
@@ -40,7 +40,6 @@ namespace hapi.employee
                         var document = XDocument.Parse(reader[0].ToString());
 
                         return new Employee(document);
-                            
                     }
                     catch (Exception e)
                     {
@@ -56,9 +55,127 @@ namespace hapi.employee
             return Employee.Null;
         }
 
-        public Employee GetEmployeeByName(string name)
+        public List<Employee> GetEmployeesByFullName(string firstName, string lastName)
         {
-            throw new NotImplementedException();
+            var result = new List<Employee>();
+
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand(
+                @"SELECT helperTable.Employee.query('.') FROM[dbo].[Company]
+                  CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+                  WHERE companyName = @companyName
+                  AND helperTable.Employee.query('./FirstName').value('.', 'varchar(max)') = @firstName
+                  AND helperTable.Employee.query('./LastName').value('.', 'varchar(max)') = @lastName;",
+                connection);
+
+            command.Parameters.AddWithValue("@companyName", _companyName);
+            command.Parameters.AddWithValue("@firstName", firstName);
+            command.Parameters.AddWithValue("@lastName", lastName);
+
+
+            try
+            {
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                    try
+                    {
+                        var document = XDocument.Parse(reader[0].ToString());
+                        result.Add(new Employee(document));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+
+            return result;
+        }
+
+        public List<Employee> GetEmployeesByFirstName(string firstName)
+        {
+            var result = new List<Employee>();
+
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand(
+                @"SELECT helperTable.Employee.query('.') FROM[dbo].[Company]
+                  CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+                  WHERE companyName = @companyName AND helperTable.Employee.query('./FirstName').value('.', 'varchar(max)') = @firstName;",
+                connection);
+
+            command.Parameters.AddWithValue("@companyName", _companyName);
+            command.Parameters.AddWithValue("@firstName", firstName);
+
+
+            try
+            {
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                    try
+                    {
+                        var document = XDocument.Parse(reader[0].ToString());
+                        result.Add(new Employee(document));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+
+            return result;
+        }
+
+        public List<Employee> GetEmployeesByLastName(string lastName)
+        {
+            var result = new List<Employee>();
+
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand(
+                @"SELECT helperTable.Employee.query('.') FROM[dbo].[Company]
+                  CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
+                  WHERE companyName = @companyName AND helperTable.Employee.query('./LastName').value('.', 'varchar(max)') = @lastName;",
+                connection);
+
+            command.Parameters.AddWithValue("@companyName", _companyName);
+            command.Parameters.AddWithValue("@lastName", lastName);
+
+
+            try
+            {
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                    try
+                    {
+                        var document = XDocument.Parse(reader[0].ToString());
+                        result.Add(new Employee(document));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+
+            return result;
         }
 
         public List<Employee> GetAllEmployees()
@@ -98,7 +215,12 @@ namespace hapi.employee
             return result;
         }
 
-        public void AddEmployee(Employee company)
+        public void AddEmployee(Employee employee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Employee GetEmployeeByName(string name)
         {
             throw new NotImplementedException();
         }

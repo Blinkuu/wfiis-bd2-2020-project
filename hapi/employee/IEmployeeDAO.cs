@@ -8,10 +8,14 @@ namespace hapi.employee
     {
         public Employee GetEmployeeById(int id);
 
-        public Employee GetEmployeeByName(string name);
+        public List<Employee> GetEmployeesByFullName(string firstName, string lastName);
+
+        public List<Employee> GetEmployeesByFirstName(string firstName);
+
+        public List<Employee> GetEmployeesByLastName(string lastName);
 
         public List<Employee> GetAllEmployees();
 
-        public void AddEmployee(Employee company);
+        public void AddEmployee(Employee employee);
     }
 }

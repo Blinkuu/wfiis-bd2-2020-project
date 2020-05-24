@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Xml.Linq;
@@ -15,7 +14,7 @@ namespace hapi.company
 
         public CompanyDAO(ConnectionContext connectionContext)
         {
-            this._connectionContext = connectionContext;
+            _connectionContext = connectionContext;
         }
 
         public Company GetCompanyById(int id)
