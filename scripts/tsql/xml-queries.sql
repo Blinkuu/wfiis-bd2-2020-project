@@ -45,6 +45,9 @@ FROM [dbo].[Company]
 CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
 WHERE companyName = 'Test Company' AND helperTable.Employee.query('./EmployeeID').value('.', 'varchar') = CAST(@managerID AS varchar(max));
 
+-- get staff by manager id
+
+
 -- insert new employee
 DECLARE @currData xml
 

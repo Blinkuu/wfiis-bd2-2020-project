@@ -16,7 +16,7 @@ namespace hapi.employee
 
         public Employee GetManagerByEmployeeId(string id);
 
-        public List<Employee> GetStaffByManagerId(string id);
+        public List<Employee> GetStaffByEmployeeId(string id);
 
         public void AddEmployee(Employee employee);
     }
