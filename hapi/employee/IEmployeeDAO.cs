@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace hapi.employee
 {
-    interface IEmployeeDAO
+    internal interface IEmployeeDAO
     {
+
         public Employee GetEmployeeById(int id);
 
         public List<Employee> GetEmployeesByFullName(string firstName, string lastName);
@@ -15,6 +14,10 @@ namespace hapi.employee
         public List<Employee> GetEmployeesByLastName(string lastName);
 
         public List<Employee> GetAllEmployees();
+
+        public Employee GetManagerByEmployeeId(int id);
+
+        public List<Employee> GetStaffByManagerId(int id);
 
         public void AddEmployee(Employee employee);
     }

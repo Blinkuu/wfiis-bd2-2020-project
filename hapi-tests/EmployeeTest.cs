@@ -98,13 +98,27 @@ namespace hapi_tests
         }
 
         [TestMethod]
+        public void GetManagerByEmployeeId()
+        {
+            Assert.IsTrue(false);
+        }
+
+        [TestMethod]
+        public void GetStaffByManagerId()
+        {
+            Assert.IsTrue(false);
+        }
+
+        [TestMethod]
         public void TestAddEmployee()
         {
             var connectionContext = new ConnectionContext(connectionString);
 
             var employeeDao = new EmployeeDAO(connectionContext, "Test Company");
+            var employee = new Employee(1, "TestFirstName", "TestLastName", "+48987654321", "test@test.com",
+                new Address("TestCity", "TestState", "54321"));
 
-            Assert.IsTrue(false);
+            employeeDao.AddEmployee(employee);
         }
     }
 }

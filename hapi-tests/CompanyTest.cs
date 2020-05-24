@@ -103,12 +103,12 @@ namespace hapi_tests
             var document = XDocument.Parse(
                 @"<Company xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
                   <Employee>
-                    <EmployeeID> 1 </EmployeeID>
+                    <EmployeeID>1</EmployeeID>
                     <ManagerID xsi:nil = ""true""/>
-                    <FirstName> Bob </FirstName>
-                    <LastName> Frank </LastName>
-                    <ContactNo> +48 123 456 789 </ContactNo>
-                    <Email> bob@frank.com </Email>
+                    <FirstName>Bob</FirstName>
+                    <LastName>Frank</LastName>
+                    <ContactNo>+48123456789</ContactNo>
+                    <Email>bob@frank.com</Email>
                     <Address>
                       <City> BobCity </City>
                       <State> BobState </State>
@@ -116,25 +116,26 @@ namespace hapi_tests
                     </Address>
                   </Employee>
                   <Employee>
-                    <EmployeeID> 2 </EmployeeID>
-                    <ManagerID> 1 </ManagerID>
-                    <FirstName> Michael </FirstName>
-                    <LastName> Ross </LastName>
-                    <ContactNo> +48 123 456 789 </ContactNo>
-                    <Email> michale@ross.com </Email>
+                    <EmployeeID>2</EmployeeID>
+                    <ManagerID>1</ManagerID>
+                    <FirstName>Michael</FirstName>
+                    <LastName>Ross</LastName>
+                    <ContactNo>+48123456789</ContactNo>
+                    <Email>michale@ross.com</Email>
                     <Address>
-                      <City> MichaelCity </City>
-                      <State> MichaelState </State>
-                      <Zip> 12345 </Zip>
+                      <City>MichaelCity</City>
+                      <State>MichaelState</State>
+                      <Zip>12345</Zip>
                     </Address>
                   </Employee>
                 </Company>
                 ");
 
             var connectionContext = new ConnectionContext(connectionString);
+
             var companyDao = new CompanyDAO(connectionContext);
 
-            var company = new Company(1, "Other Co.", document);
+            var company = new Company("Other Co.", document);
             companyDao.AddCompany(company);
         }
     }

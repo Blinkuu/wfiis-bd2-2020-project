@@ -27,4 +27,8 @@ SELECT helperTable.Employee.query('.') FROM[dbo].[Company]
 -- by full name
 SELECT helperTable.Employee.query('.') FROM[dbo].[Company]
                   CROSS APPLY companyData.nodes('/Company/Employee') as helperTable(Employee)
-                  WHERE companyName = 'Test Company' AND helperTable.Employee.query('./LastName').value('.', 'varchar(max)') = 'Frank';
+                  WHERE companyName = 'Test Company' 
+				  AND helperTable.Employee.query('./FirstName').value('.', 'varchar(max)') = 'Bob'
+				  AND helperTable.Employee.query('./LastName').value('.', 'varchar(max)') = 'Frank';
+
+-- insert new employee

@@ -215,14 +215,38 @@ namespace hapi.employee
             return result;
         }
 
-        public void AddEmployee(Employee employee)
+        public Employee GetManagerByEmployeeId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Employee GetEmployeeByName(string name)
+        public List<Employee> GetStaffByManagerId(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddEmployee(Employee employee)
+        {
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand(
+                @""
+                , connection);
+
+            var transaction = connection.BeginTransaction();
+            command.Transaction = transaction;
+            try
+            {
+                command.ExecuteNonQuery();
+                transaction.Commit();
+            }
+            catch (SqlException e)
+            {
+                transaction.Rollback();
+                Console.WriteLine(e.ToString());
+                throw;
+            }
         }
     }
 }

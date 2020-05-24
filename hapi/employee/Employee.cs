@@ -52,6 +52,17 @@ namespace hapi.employee
             );
         }
 
+        public Employee(int managerId, string firstName, string lastName, string contactNo, string email,
+            Address address)
+        {
+            ManagerId = managerId;
+            FirstName = firstName;
+            LastName = lastName;
+            ContactNo = contactNo;
+            Email = email;
+            Address = address;
+        }
+
         public Employee(int id, int managerId, string firstName, string lastName, string contactNo, string email,
             Address address)
         {
