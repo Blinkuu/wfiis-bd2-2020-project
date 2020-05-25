@@ -43,6 +43,19 @@ namespace hapi_tests
                       <Zip>12345</Zip>
                     </Address>
                   </Employee>
+                  <Employee>
+                      <EmployeeID>3</EmployeeID>
+                      <ManagerID>1</ManagerID>
+                      <FirstName>Ricky</FirstName>
+                      <LastName>Boss</LastName>
+                      <ContactNo>+48123456789</ContactNo>
+                      <Email>ricky@boss.com</Email>
+                      <Address>
+                        <City>RickyCity</City>
+                        <State>RickyState</State>
+                        <Zip>14578</Zip>
+                      </Address>
+                  </Employee>
                 </Company>");
 
             var connectionContext = new ConnectionContext(connectionString);
@@ -86,6 +99,19 @@ namespace hapi_tests
                       <Zip>12345</Zip>
                     </Address>
                   </Employee>
+                  <Employee>
+                      <EmployeeID>3</EmployeeID>
+                      <ManagerID>1</ManagerID>
+                      <FirstName>Ricky</FirstName>
+                      <LastName>Boss</LastName>
+                      <ContactNo>+48123456789</ContactNo>
+                      <Email>ricky@boss.com</Email>
+                      <Address>
+                        <City>RickyCity</City>
+                        <State>RickyState</State>
+                        <Zip>14578</Zip>
+                      </Address>
+                  </Employee>
                 </Company>");
 
             var connectionContext = new ConnectionContext(connectionString);
@@ -111,9 +137,9 @@ namespace hapi_tests
                     <ContactNo>+48123456789</ContactNo>
                     <Email>bob@frank.com</Email>
                     <Address>
-                      <City> BobCity </City>
-                      <State> BobState </State>
-                      <Zip> 12345 </Zip>
+                      <City>BobCity</City>
+                      <State>BobState</State>
+                      <Zip>12345</Zip>
                     </Address>
                   </Employee>
                   <Employee>
@@ -129,8 +155,20 @@ namespace hapi_tests
                       <Zip>12345</Zip>
                     </Address>
                   </Employee>
-                </Company>
-                ");
+                  <Employee>
+                      <EmployeeID>3</EmployeeID>
+                      <ManagerID>1</ManagerID>
+                      <FirstName>Ricky</FirstName>
+                      <LastName>Boss</LastName>
+                      <ContactNo>+48123456789</ContactNo>
+                      <Email>ricky@boss.com</Email>
+                      <Address>
+                        <City>RickyCity</City>
+                        <State>RickyState</State>
+                        <Zip>14578</Zip>
+                      </Address>
+                  </Employee>
+                </Company>");
 
             var connectionContext = new ConnectionContext(connectionString);
 
@@ -138,6 +176,22 @@ namespace hapi_tests
 
             var company = new Company("Other Co. " + Guid.NewGuid(), document);
             companyDao.AddCompany(company);
+        }
+
+        [TestMethod]
+        public void TestRemoveCompanyByName()
+        {
+            var connectionContext = new ConnectionContext(connectionString);
+
+            var document = XDocument.Parse(
+                @"<Company xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""/>");
+
+            var companyDao = new CompanyDAO(connectionContext);
+
+            var company = new Company("Company For Removal", document);
+            companyDao.AddCompany(company);
+
+            companyDao.RemoveCompanyByName("Company For Removal");
         }
     }
 }

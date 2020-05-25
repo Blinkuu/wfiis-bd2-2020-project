@@ -118,37 +118,47 @@ DROP XML SCHEMA COLLECTION CompanyDataSchemaCollection;
 
 -- create xml schema collection
 CREATE XML SCHEMA COLLECTION CompanyDataSchemaCollection
-    AS'<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" 
-  xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="Company">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" name="Employee">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="EmployeeID" type="xs:string" />
-              <xs:element name="ManagerID" nillable="true" type="xs:string" />
-              <xs:element name="FirstName" type="xs:string" />
-              <xs:element name="LastName" type="xs:string" />
-              <xs:element name="ContactNo" type="xs:string" />
-              <xs:element name="Email" type="xs:string" />
-              <xs:element name="Address">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="City" type="xs:string" />
-                    <xs:element name="State" type="xs:string" />
-                    <xs:element name="Zip" type="xs:string" />
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-</xs:schema>'
+    AS'<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xsd:element name="Company">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element name="Employee" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:complexContent>
+                  <xsd:restriction base="xsd:anyType">
+                    <xsd:sequence>
+                      <xsd:element name="EmployeeID" type="xsd:string" />
+                      <xsd:element name="ManagerID" type="xsd:string" nillable="true" />
+                      <xsd:element name="FirstName" type="xsd:string" />
+                      <xsd:element name="LastName" type="xsd:string" />
+                      <xsd:element name="ContactNo" type="xsd:string" />
+                      <xsd:element name="Email" type="xsd:string" />
+                      <xsd:element name="Address">
+                        <xsd:complexType>
+                          <xsd:complexContent>
+                            <xsd:restriction base="xsd:anyType">
+                              <xsd:sequence>
+                                <xsd:element name="City" type="xsd:string" />
+                                <xsd:element name="State" type="xsd:string" />
+                                <xsd:element name="Zip" type="xsd:string" />
+                              </xsd:sequence>
+                            </xsd:restriction>
+                          </xsd:complexContent>
+                        </xsd:complexType>
+                      </xsd:element>
+                    </xsd:sequence>
+                  </xsd:restriction>
+                </xsd:complexContent>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>'
 
 -- see xsd schema
 SELECT xml_schema_namespace(N'dbo', N'CompanyDataSchemaCollection');

@@ -141,5 +141,31 @@ namespace hapi.company
                 throw;
             }
         }
+
+        public void RemoveCompanyByName(string name)
+        {
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand(
+                @"DELETE FROM [Company] WHERE companyName = @companyName"
+                , connection);
+
+            command.Parameters.AddWithValue("@companyName", name);
+
+            var transaction = connection.BeginTransaction();
+            command.Transaction = transaction;
+            try
+            {
+                command.ExecuteNonQuery();
+                transaction.Commit();
+            }
+            catch (SqlException e)
+            {
+                transaction.Rollback();
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+        }
     }
 }
