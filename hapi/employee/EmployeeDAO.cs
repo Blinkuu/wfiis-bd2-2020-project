@@ -325,7 +325,39 @@ namespace hapi.employee
             command.Parameters.AddWithValue("@companyName", _companyName);
             command.Parameters.AddWithValue("@xmlData", employee.ToXDocument().ToString());
 
-            Console.WriteLine(employee.ToXDocument().ToString());
+            var transaction = connection.BeginTransaction();
+            command.Transaction = transaction;
+            try
+            {
+                command.ExecuteNonQuery();
+                transaction.Commit();
+            }
+            catch (SqlException e)
+            {
+                transaction.Rollback();
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+        }
+
+        public void RemoveEmployeeById(string id)
+        {
+            using var connection = new SqlConnection(_connectionContext.connectionString);
+            connection.Open();
+
+            var command = new SqlCommand(
+                @"DECLARE @empId varchar(max);
+                  SET @empId = @employeeId;
+                  DECLARE @currentData xml;
+                  SELECT @currentData = companyData FROM [dbo].[Company] WHERE companyName = @companyName;
+                  SET @currentData.modify('delete /Company/Employee[EmployeeID = sql:variable(""@empId"")]');
+                  DECLARE @final XML;
+                  SET @final = @currentData;
+                  UPDATE[Company] SET[companyData] = @final WHERE companyName = @companyName;"
+                , connection);
+
+            command.Parameters.AddWithValue("@companyName", _companyName);
+            command.Parameters.AddWithValue("@employeeId", id);
 
             var transaction = connection.BeginTransaction();
             command.Transaction = transaction;

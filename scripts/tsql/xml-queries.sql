@@ -113,6 +113,55 @@ SET @final.modify('delete /tmp')
 
 SELECT @final
 
+-- remove employee by id
+DECLARE @currentDataForRemoval xml
+
+SET @currentDataForRemoval = 
+'<Company xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Employee>
+    <EmployeeID>1</EmployeeID>
+    <ManagerID xsi:nil="true" />
+    <FirstName>Bob</FirstName>
+    <LastName>Frank</LastName>
+    <ContactNo>+48123456789</ContactNo>
+    <Email>bob@frank.com</Email>
+    <Address>
+      <City>BobCity</City>
+      <State>BobState</State>
+      <Zip>12345</Zip>
+    </Address>
+  </Employee>
+  <Employee>
+    <EmployeeID>2</EmployeeID>
+    <ManagerID>1</ManagerID>
+    <FirstName>Michael</FirstName>
+    <LastName>Ross</LastName>
+    <ContactNo>+48123456789</ContactNo>
+    <Email>michale@ross.com</Email>
+    <Address>
+      <City>MichaelCity</City>
+      <State>MichaelState</State>
+      <Zip>12345</Zip>
+    </Address>
+  </Employee>
+  <Employee>
+    <EmployeeID>123456789</EmployeeID>
+    <ManagerID>1</ManagerID>
+    <FirstName>Michael</FirstName>
+    <LastName>Ross</LastName>
+    <ContactNo>+48123456789</ContactNo>
+    <Email>michale@ross.com</Email>
+    <Address>
+      <City>MichaelCity</City>
+      <State>MichaelState</State>
+      <Zip>12345</Zip>
+    </Address>
+  </Employee>
+</Company>'
+
+SET @currentDataForRemoval.modify('delete /Company/Employee[EmployeeID = 123456789]')
+SELECT @currentDataForRemoval
+
 -- drop xml schema colletion
 DROP XML SCHEMA COLLECTION CompanyDataSchemaCollection;
 

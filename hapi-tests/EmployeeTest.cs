@@ -164,5 +164,19 @@ namespace hapi_tests
 
             employeeDao.AddEmployee(employee);
         }
+
+        [TestMethod]
+        public void TestRemoveEmployeeById()
+        {
+            var connectionContext = new ConnectionContext(connectionString);
+
+            var employeeDao = new EmployeeDAO(connectionContext, "Other Co.");
+            var employee = new Employee("123456789", "1", "TestFirstName", "TestLastName", "+48987654321", "test@test.com",
+                new Address("TestCity", "TestState", "54321"));
+
+            employeeDao.AddEmployee(employee);
+
+            employeeDao.RemoveEmployeeById("123456789");
+        }
     }
 }

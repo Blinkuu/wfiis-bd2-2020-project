@@ -14,9 +14,12 @@ namespace hapi
             var connectionContext = new ConnectionContext(ConnectionString);
 
             var employeeDao = new EmployeeDAO(connectionContext, "Other Co.");
-            var employee = employeeDao.GetManagerByEmployeeId("fd6b7c83-d699-4a5b-9284-00c783a9162c");
+            var employee = new Employee("123456789", "1", "TestFirstName", "TestLastName", "+48987654321", "test@test.com",
+                new Address("TestCity", "TestState", "54321"));
 
-            Console.WriteLine(employee);
+            employeeDao.AddEmployee(employee);
+
+            employeeDao.RemoveEmployeeById("123456789");
         }
     }
 }

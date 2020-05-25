@@ -2,7 +2,7 @@
 
 namespace hapi.employee
 {
-    internal interface IEmployeeDAO
+    public interface IEmployeeDAO
     {
         public Employee GetEmployeeById(string id);
 
@@ -19,5 +19,7 @@ namespace hapi.employee
         public List<Employee> GetStaffByEmployeeId(string id);
 
         public void AddEmployee(Employee employee);
+
+        public void RemoveEmployeeById(string id);
     }
 }
