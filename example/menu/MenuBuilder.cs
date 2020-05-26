@@ -14,6 +14,8 @@ namespace example.menu
 
         public void BuildRemoveEmployeeMenuOption();
 
+        public void BuildExitMenuOption();
+
         public Menu GetResult();
     }
 
@@ -46,6 +48,10 @@ namespace example.menu
             _menu.Add(new RemoveEmployeeMenuOption());
         }
 
+        public void BuildExitMenuOption()
+        {
+            _menu.Add(new ExitMenuOption());
+        }
 
         public Menu GetResult()
         {

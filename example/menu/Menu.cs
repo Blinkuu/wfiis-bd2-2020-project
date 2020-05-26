@@ -19,12 +19,9 @@ namespace example.menu
 
         public void GetInput()
         {
-            string userInput = Console.ReadLine();
+            var userInput = Console.ReadLine();
 
-            foreach (var option in _menuOptions)
-            {
-                option.TryRun(userInput);
-            }
+            foreach (var option in _menuOptions) option.TryRun(userInput);
         }
     }
 }

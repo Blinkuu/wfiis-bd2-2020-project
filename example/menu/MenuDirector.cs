@@ -19,6 +19,7 @@ namespace example.menu
             builder.BuildRemoveCompanyMenuOption();
             builder.BuildAddEmployeeMenuOption();
             builder.BuildRemoveEmployeeMenuOption();
+            builder.BuildExitMenuOption();
         }
     }
 }

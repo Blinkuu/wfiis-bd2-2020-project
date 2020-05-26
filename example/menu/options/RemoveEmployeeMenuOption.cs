@@ -1,5 +1,4 @@
-﻿using System;
-using hapi.context;
+﻿using hapi.context;
 using hapi.employee;
 
 namespace example.menu.options

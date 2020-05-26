@@ -4,8 +4,6 @@ namespace example.application
 {
     internal class Application
     {
-        private readonly bool _isRunning = true;
-
         public void Run()
         {
             var menuBuilder = new ConcreteMenuBuilder();
@@ -14,7 +12,7 @@ namespace example.application
 
             var menu = menuBuilder.GetResult();
 
-            while (_isRunning)
+            while (true)
             {
                 menu.Show();
                 menu.GetInput();
