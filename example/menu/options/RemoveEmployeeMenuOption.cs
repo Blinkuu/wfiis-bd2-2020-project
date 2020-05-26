@@ -1,27 +1,29 @@
-﻿using hapi.company;
+﻿using System;
 using hapi.context;
+using hapi.employee;
 
 namespace example.menu.options
 {
-    public class RemoveEmployeeMenuOption : MenuOption
+    internal class RemoveEmployeeMenuOption : MenuOption
     {
-        public RemoveEmployeeMenuOption() : base("3", "Usuń pracownika z firmy")
+        public RemoveEmployeeMenuOption() : base("4", "Dodaj pracownika do firmy")
         {
         }
 
         private void OptionHandler()
         {
-            RemoveCompany(
-                GetInput("Nazwa firmy: ")
+            RemoveEmployee(
+                GetInput("Nazwa firmy: "),
+                GetInput("id: ")
             );
         }
 
-        private void RemoveCompany(string companyName)
+        private void RemoveEmployee(string companyName, string id)
         {
             var connectionContext = new ConnectionContext(ConnectionString);
-            var companyDao = new CompanyDAO(connectionContext);
+            var employeeDao = new EmployeeDAO(connectionContext, companyName);
 
-            companyDao.RemoveCompanyByName(companyName);
+            employeeDao.RemoveEmployeeById(id);
         }
 
         public override void Run()

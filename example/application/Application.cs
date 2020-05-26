@@ -9,10 +9,8 @@ namespace example.application
         public void Run()
         {
             var menuBuilder = new ConcreteMenuBuilder();
-            menuBuilder.BuildShowCompanyMenuOption();
-            menuBuilder.BuildAddCompanyMenuOption();
-            menuBuilder.BuildAddEmployeeMenuOption();
-            menuBuilder.BuildRemoveEmployeeMenuOption();
+            var director = new MenuDirector();
+            director.ConstructMenu(menuBuilder);
 
             var menu = menuBuilder.GetResult();
 
