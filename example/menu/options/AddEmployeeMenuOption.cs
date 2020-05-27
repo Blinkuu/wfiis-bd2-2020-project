@@ -12,12 +12,13 @@ namespace example.menu.options
 
         private void OptionHandler()
         {
-            AddEmployee(GetInput("Nazwa firmy:"), new Employee(
+            AddEmployee(GetInput("Nazwa firmy: "), new Employee(
                 GetInput("id: "),
                 GetInput("Manager id: "),
                 GetInput("Imie: "),
                 GetInput("Nazwisko: "),
                 GetInput("Nr tel.: "),
+                GetInput("email"),
                 new Address(
                     GetInput("Miasto: "),
                     GetInput("Stan: "),

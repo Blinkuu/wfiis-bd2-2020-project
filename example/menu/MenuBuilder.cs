@@ -14,6 +14,10 @@ namespace example.menu
 
         public void BuildRemoveEmployeeMenuOption();
 
+        public void BuildGetManagerByEmployeeId();
+
+        public void BuildGetStaffByEmployeeId();
+
         public void BuildExitMenuOption();
 
         public Menu GetResult();
@@ -46,6 +50,16 @@ namespace example.menu
         public void BuildRemoveEmployeeMenuOption()
         {
             _menu.Add(new RemoveEmployeeMenuOption());
+        }
+
+        public void BuildGetManagerByEmployeeId()
+        {
+            _menu.Add(new GetManagerByEmployeeIdMenuOption());
+        }
+
+        public void BuildGetStaffByEmployeeId()
+        {
+            _menu.Add(new GetStaffByEmployeeIdMenuOption());
         }
 
         public void BuildExitMenuOption()

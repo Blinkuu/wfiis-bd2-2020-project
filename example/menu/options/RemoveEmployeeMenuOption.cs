@@ -5,7 +5,7 @@ namespace example.menu.options
 {
     internal class RemoveEmployeeMenuOption : MenuOption
     {
-        public RemoveEmployeeMenuOption() : base("4", "Dodaj pracownika do firmy")
+        public RemoveEmployeeMenuOption() : base("4", "Usuń pracownika z firmy")
         {
         }
 
