@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>hapi</name>
+    </assembly>
+    <members>
+        <member name="T:hapi.context.ConnectionContext">
+            <summary>
+                <c>ConnectionContext</c> class.
+                Przechowuje string służący do łączenia się z bazą danych.
+            </summary>
+        </member>
+        <member name="M:hapi.context.ConnectionContext.#ctor(System.String)">
+            <summary>
+                Tworzy nową instancję instance klasy <see cref="T:hapi.context.ConnectionContext" />.
+            </summary>
+            <param name="connectionString">String do połączenia się z bazą danych.</param>
+        </member>
+    </members>
+</doc>
