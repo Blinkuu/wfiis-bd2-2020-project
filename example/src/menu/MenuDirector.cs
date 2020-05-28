@@ -17,6 +17,7 @@ namespace example.menu
             builder.BuildShowCompanyMenuOption();
             builder.BuildAddCompanyMenuOption();
             builder.BuildRemoveCompanyMenuOption();
+            builder.BuildGetEmployeeById();
             builder.BuildAddEmployeeMenuOption();
             builder.BuildRemoveEmployeeMenuOption();
             builder.BuildGetManagerByEmployeeId();

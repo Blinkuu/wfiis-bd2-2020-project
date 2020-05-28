@@ -4,7 +4,7 @@ namespace example.menu.options
 {
     internal class ExitMenuOption : MenuOption
     {
-        public ExitMenuOption() : base("7", "Wyjdź")
+        public ExitMenuOption() : base("8", "Wyjdź")
         {
         }
 

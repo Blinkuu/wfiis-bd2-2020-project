@@ -6,7 +6,7 @@ namespace example.menu.options
 {
     public class AddEmployeeMenuOption : MenuOption
     {
-        public AddEmployeeMenuOption() : base("3", "Dodaj pracownika do firmy")
+        public AddEmployeeMenuOption() : base("4", "Dodaj pracownika do firmy")
         {
         }
 

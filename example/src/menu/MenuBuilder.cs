@@ -10,6 +10,8 @@ namespace example.menu
 
         public void BuildRemoveCompanyMenuOption();
 
+        public void BuildGetEmployeeById();
+
         public void BuildAddEmployeeMenuOption();
 
         public void BuildRemoveEmployeeMenuOption();
@@ -40,6 +42,11 @@ namespace example.menu
         public void BuildRemoveCompanyMenuOption()
         {
             _menu.Add(new RemoveCompanyMenuOption());
+        }
+
+        public void BuildGetEmployeeById()
+        {
+            _menu.Add(new GetEmployeeByIdMenuOption());
         }
 
         public void BuildAddEmployeeMenuOption()

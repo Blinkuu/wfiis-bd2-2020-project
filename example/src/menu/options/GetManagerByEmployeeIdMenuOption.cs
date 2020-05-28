@@ -8,7 +8,7 @@ namespace example.menu.options
 {
     class GetManagerByEmployeeIdMenuOption : MenuOption
     {
-        public GetManagerByEmployeeIdMenuOption() : base("5", "Znajdź menadżera po id pracownika")
+        public GetManagerByEmployeeIdMenuOption() : base("6", "Znajdź menadżera po id pracownika")
         {
         }
 

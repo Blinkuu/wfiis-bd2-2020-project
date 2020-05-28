@@ -4,24 +4,23 @@ using hapi.employee;
 
 namespace example.menu.options
 {
-    internal class GetStaffByEmployeeIdMenuOption : MenuOption
+    internal class GetEmployeeByIdMenuOption : MenuOption
     {
-        public GetStaffByEmployeeIdMenuOption() : base("7", "Znajdź osoby pod menadżerem po id menadżera")
+        public GetEmployeeByIdMenuOption() : base("3", "Znajdź pracownika po id")
         {
         }
 
         private void OptionHandler()
         {
-            GetStaffByEmployeeId(GetInput("Nazwa firmy: "), GetInput("id: "));
+            GetEmployeeById(GetInput("Nazwa firmy: "), GetInput("id: "));
         }
 
-        private void GetStaffByEmployeeId(string companyName, string id)
+        private void GetEmployeeById(string companyName, string id)
         {
             var connectionContext = new ConnectionContext(ConnectionString);
 
             var employeeDao = new EmployeeDAO(connectionContext, companyName);
-            foreach (var employee in employeeDao.GetStaffByEmployeeId(id))
-                Console.WriteLine(employee);
+            Console.WriteLine(employeeDao.GetEmployeeById(id));
         }
 
         public override void Run()
